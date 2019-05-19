@@ -1,0 +1,111 @@
+{% extends "stock/base.html" %}
+
+
+{% block content %}
+
+
+
+{% if stock_data %}
+<div class="container mt-4">
+    <div class="row justify-content-center">  
+        <div class="col">
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        
+                        <th>商品名稱</th>
+                        <th>商品規格</th>
+                        <th>安全庫存</th>
+                        <th>販售平台</th>
+                        <th>總入庫數量</th>
+                        <th>總出庫數量</th>
+                        <th>現存數量</th>
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>      
+                        {% for each in stock_data%}
+                    <tr>
+                        <td>{{each.itemname}}</td>
+                        <td>{{each.itemspec}}</td>
+                        <td>{{each.safty_stock}}</td>
+                        <td>{{each.sell_platform}}</td>
+                        <td>{{each.sum_import}}</td>
+                        <td>{{each.sum_output}}</td>
+                        <td>{{each.stock}}</td>
+                    </tr>    
+                        {% endfor %}
+                </tbody>
+            </table>
+       </div>
+    </div>
+</div>
+{%　endif %}
+
+<div class="container mt-4 ">
+    <div class="row justify-content-center">
+        <div class="col-4">
+
+            <form class="form-login" action="/revise/" method="post">
+            {% csrf_token %}
+            {% if message %}
+            <div class="alert alert-warning">{{message}}</div>
+            {% endif %}
+
+            <div class="form-group">
+            <label for="saftystock">商品名稱</label>
+            <select name="itemname" select style="width:300px; height:35px">           
+            <option >{{itemname}}</option>           
+            </select>
+            </div>
+            <div class="form-group">
+            <label for="itemspec">商品規格</label><BR>
+            <select name="itemspec" select style="width:300px; height:35px">
+            <option >{{itemspec}}</option>
+            </select>
+            <BR>
+            <BR>
+            <div class="form-group">
+            <label for="saftystock">庫存安全量</label>
+            <input type="number" class="form-control" id="saftystock" 
+            name="saftystock" value="0"  autfoucos />
+            </div>
+
+            <div class="form-group">
+            <label for="platform">販售平台</label>
+            <input type="text" class="form-control" id="platform" 
+            name="platform" autfoucos />
+            </div>
+
+            <div class="form-group">
+            <label for="importnum">總入庫數</label>
+            <input type="number" class="form-control" id="importnum" 
+            name="import" value="0" autfoucos />
+            </div>
+
+            <div class="form-group">
+            <label for="outputnum">總出庫數</label>
+            <input type="number" class="form-control" id="outputnum" 
+            name="output" value="0" autfoucos />
+            </div>
+
+            <div class="form-group">
+            <label for="stock">現存數量</label>
+            <input type="number" class="form-control" id="stock" 
+            name="stock" value="0" autfoucos />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-primary pull-right">reset</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

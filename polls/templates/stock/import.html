@@ -1,0 +1,132 @@
+{% extends "stock/base.html"%}
+
+
+    
+{% block content%}
+
+
+
+<div class="container mt-4 ">
+    <div class="row justify-content-center">
+        <div class="col-4">      
+            <h2>入庫 <small>import</small></h2>
+            <form class="form-login" action="/import/" method="post">
+            {% csrf_token %}
+            {% if message %}
+            <div class="alert alert-warning">{{message}}</div>
+            {% endif %}
+            {% if itemname_c %}
+            <div class="form-group">
+            <label for="itemname">商品名稱</label><BR>
+            <select name="itemname"select style="width:200px; height:35px">
+            <option >{{itemname_c}}</option>
+            </select>
+            </div>
+            {% else %}
+            <div class="form-group">
+            <label for="importnum">商品名稱  </label>
+            <input type="text" class="form-control" id="itemname" 
+            name="itemname" autfoucos required/>
+            </div>
+            
+            {% endif %}
+
+
+            {% if itemspec_c %}
+            <div class="form-group">
+            <label for="itemspec">商品規格</label><BR>
+            <select name="itemspec" select style="width:200px; height:35px">
+            <option >{{itemspec_c}}</option>
+            </select>
+            </div>
+            {% else %}
+            <div class="form-group">
+            <label for="importnum">商品規格  </label>
+            <input type="text" class="form-control" id="itemname" 
+            name="itemname" autfoucos required/>
+            </div>
+
+            {% endif %}
+
+
+            <div class="form-group">
+            <label for="importnum">入庫數  </label>
+            <input type="number" class="form-control" id="importnum" 
+            name="import" autfoucos required/>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-primary pull-right">reset</button>
+            </form>   
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 ">
+    <div class="row justify-content-center">
+        <div class="col-12">
+
+        {% if stock_data %}
+        <table id="table_id" class="display"> 
+            <thead>
+                <tr>
+                    
+                    <th>商品名稱</th>
+                    <th>商品規格</th>
+                    <th>安全庫存</th>
+                    <th>販售平台</th>
+                    <th>總入庫數量</th>
+                    <th>總出庫數量</th>
+                    <th>現存數量</th>
+                    <th>功能</th>
+                    
+                </tr>
+            </thead>
+            <tbody>      
+                    {% for each in stock_data%}
+                <tr>
+                    <td>{{each.itemname}}</td>
+                    <td>{{each.itemspec}}</td>
+                    <td>{{each.safty_stock}}</td>
+                    <td>{{each.sell_platform}}</td>
+                    <td>{{each.sum_import}}</td>
+                    <td>{{each.sum_output}}</td>
+                    <td>{{each.stock}}</td>
+                    <td>
+                    <div class=row>
+                    <form>  
+                            {% csrf_token %}  
+                             {% if request.session.is_admin %}                             
+                            <button type="submit" class="btn btn-outline-info" onclick="location.href='/revise/'" name="itemname_c" value="{{each.itemname}},{{each.itemspec}}" formaction="/revise/" formmethod="post" >Revise</button>                                                                                          
+                            {% endif%}
+                            <button type="submit" class="btn btn-outline-info" onclick="location.href='/import/'" name="itemname_c" value="{{each.itemname}},{{each.itemspec}}" formaction="/import/" formmethod="post" >import</button>                                                                                     
+                            <button type="submit" class="btn btn-outline-info" onclick="location.href='/output/'" name="itemname_c" value="{{each.itemname}},{{each.itemspec}}" formaction="/output/" formmethod="post" >output</button>                        
+                    </form>
+                    </div>
+                    </td>
+                    
+                </tr>    
+                    {% endfor %}
+            </tbody>
+        </p>
+        </table>
+        {% endif%}
+
+        </div>
+    </div>
+</div>
+
+        
+        
+        
+        
+        
+
+
+
+
+
+        
+       
+ 
+{% endblock %}

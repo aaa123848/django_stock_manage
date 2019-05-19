@@ -1,0 +1,84 @@
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>import</title>
+
+    <!--<link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css'%}" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    {% block head %}{% endblock %} 
+    {% block css%} {% endblock %}
+
+
+    
+    <style type="text/css" >
+    html, 
+    body {
+    height: 100%;
+    }
+    body{
+      background-image: url(../../static/img/animegirl.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;   
+      
+    }
+    </style>
+    <!--<link href="{% static 'login/css/login.css' %}" rel="stylesheet"/>-->
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/base/">小魚集團</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/stocksheet/">庫存列表 <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="/stock/">新品庫存建檔 </a>
+          <a class="nav-item nav-link" href="/import/">入庫 </a>
+          <a class="nav-item nav-link" href="/output/" tabindex="-1" aria-disabled="true">出庫 </a>
+        </div>
+      </div>
+	    <form class="form-inline my-2 my-lg-0">
+				{% if request.session.is_login%}
+					<a class="nav-link nav-link">welcome {{request.session.this_is_mother_fuck}}</a>
+					<a class="nav-link nav-link" href="/logout/">logout</a>
+				{% else %}
+          <a class="nav-item nav-link" style="color: rgba(0,0,0,.9);" href="/login/">登入</a>
+        {% endif %}
+	    </form>      
+    </nav>
+
+  <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+  {% comment %} <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> {% endcomment %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  {% if request.session.is_admin %}
+    {{request.session.is_admin}}
+  {% endif %}
+  
+  {% block content%} {%endblock%}
+
+  <script>
+  $(document).ready( function () {
+      $('#table_id').DataTable();
+  } );
+  </script>
+
+
+
+</body>
+
+
+</html>
