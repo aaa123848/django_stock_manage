@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from . import models
 from django.shortcuts import redirect
-from django_tables2 import RequestConfig
 
-import django_filters
 from django.http import HttpResponse
 
 

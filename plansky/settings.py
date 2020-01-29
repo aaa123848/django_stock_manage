@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'polls',
-    'django_tables2',
-    'django_filters',
     
 ]
 
